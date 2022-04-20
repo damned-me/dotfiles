@@ -37,11 +37,11 @@
 
 ! Fonts
 *.faceName: DejaVu Sans Mono for Powerline 
-.*font: *-fixed-*-*-*-20-*
+*.vt100.font: *-fixed-*-*-*-18-*
+*faceSize: 14 
 
+*translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
 
-! XTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
-
-XTerm*VT100.Translations: #override \
+*Translations: #override \
                  Ctrl Shift <Key>V:    insert-selection(SELECT) \n\
                  Ctrl Shift <Key>C:    copy-selection(SELECT)
