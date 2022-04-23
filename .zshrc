@@ -149,3 +149,9 @@ export PATH="$PATH:/usr/share/rvm/bin"
 # Install Ruby Gems to ~/.gems
 export GEM_HOME="$HOME/.gems"
 export PATH="$PATH:$HOME/gems/bin"
+
+export GPG_TTY=$(tty)
+gpg-connect-agent updatestartuptty /bye >/dev/null
+
+# Enable vi mode
+bindkey -v
