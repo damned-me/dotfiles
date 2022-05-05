@@ -114,15 +114,19 @@ alias ls='exa'
 alias ll='exa --tree --level=2 -l'
 alias la='exa --tree --level=2 -la'
 
+alias pls="sudo"
+
 alias vi='vim'
 
 alias v='vi'
 alias q='exit'
 
+alias p='python3'
+
 alias zshconfig='vi ~/.zshrc'
 alias vimconfig='vi ~/.vimrc'
 alias xconfig='vi ~/.xinitrc'
-alias tconfig='vi ~/.Xdefaults'
+alias tconfig='vi ~/.Xresources'
 alias i3config='vi ~/.config/i3/config'
 alias i3sconfig='vi ~/.config/i3status/config'
 # End of user defined alias
