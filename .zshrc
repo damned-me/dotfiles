@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -123,23 +123,87 @@ alias q='exit'
 
 alias p='python3'
 
+alias pdf=zathura
+
 alias zshconfig='vi ~/.zshrc'
 alias vimconfig='vi ~/.vimrc'
 alias xconfig='vi ~/.xinitrc'
 alias tconfig='vi ~/.Xresources'
 alias i3config='vi ~/.config/i3/config'
 alias i3sconfig='vi ~/.config/i3status/config'
+alias rconfig='vi ~/.config/ranger/rc.conf'
+
 # End of user defined alias
 
 # User defined functions
 
+# Get cheatsheet
+#  ex.  cheat c/move_cursor
+#       cheat python/print
 function cheat(){
 	curl cht.sh/$1
 }	
 
-function wheather(){
+# Get weather
+#  ex.  weather New_York
+#       weather "40.7305991,-73.9865811"
+#       weather NYC
+function weather(){
 	curl wttr.in/$1
 }
+
+# Quick connect to wifi
+function wific(){
+    if [ -z "$1" ]
+    then
+        echo "Usage: wific <wifi_network> [interface]"
+        return 1
+    fi
+
+    interface=$2
+    if [ -z "$2" ]
+    then 
+        interface="wlan0" 
+    fi
+
+    while : ; do   
+        iwctl station $interface scan
+        [[ $? == 0 ]] || break
+    done
+
+    iwctl station $interface get-networks
+
+    while : ; do
+        iwctl station $interface connect $1 > /dev/null
+        [[ $? == 0 ]] || break
+    done;
+}
+
+# Open spotify
+function spoti(){
+    systemctl --user status spotifyd.service > /dev/null
+
+    if [[ $? == 3 ]]
+    then
+        systemctl --user restart spotifyd --now
+    fi
+
+    spt
+}
+
+#function fullbkp(){
+#    sudo tar czf "/mnt/backup-$HOST-$(date +"%d_%m_%Y").tar.gz" \
+#        --exclude=/backup.tar.gz \
+#        --exclude=/dev \
+#        --exclude=/mnt \
+#        --exclude=/proc \
+#        --exclude=/sys \
+#        --exclude=/tmp \
+#        --exclude=/media \
+#        --exclude=/lost+found \
+#        --exclude=/data \
+#        /
+#}
 
 # End of user defined functions
 
@@ -152,7 +216,7 @@ export PATH="$PATH:/usr/share/rvm/bin"
 
 # Install Ruby Gems to ~/.gems
 export GEM_HOME="$HOME/.gems"
-export PATH="$PATH:$HOME/gems/bin"
+export PATH="$PATH:$HOME/.gems/bin"
 
 export GPG_TTY=$(tty)
 gpg-connect-agent updatestartuptty /bye >/dev/null

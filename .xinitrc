@@ -37,6 +37,6 @@ fi
 # xterm -geometry 80x50+494+51 &
 # xterm -geometry 80x20+494-0 &
 # exec xterm -geometry 80x66+0+0 -name login
-
-twm &
-exec i3
+[ -z "$DISPLAY" ] && [ $XDG_VTNR -eq 1 ] && exec i3
+# twm &
+#exec i3

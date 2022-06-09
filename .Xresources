@@ -36,7 +36,9 @@
 *.color15:      #c5c8c
 
 ! Fonts
-*faceName: DejaVu Sans Mono for Powerline 
+*faceName: DejaVu Sans Mono 
+*font: DejaVu Sans Mono
+! for Powerline 
 *faceSize: 14 
 
 ! Clipboard
@@ -48,7 +50,14 @@
 
 ! Scrollback...
 *savelines: 16384
+! do not scroll with output
+*scrollTtyOutput: false
+
+! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+*scrollWithBuffer: true
+
+! scroll back to the bottom on keypress
+*scrollTtyKeypress: true
 
 ! double-click to select whole URLs
 *charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
-

@@ -46,7 +46,6 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
-#bindsym $mod+Return exec xterm 
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -88,6 +87,7 @@ bindsym $mod+h split h
 
 # split in vertical orientation
 bindsym $mod+v split v
+bindsym $mod+t split t
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -180,15 +180,15 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
+# Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
 bar {
-    status_command i3status
-	position top
+	status_command i3status
+	position top 
 	i3bar_command i3bar --transparency
+	bindsym --release button3 exec --no-startup-id import -window root ~/media/screenshots/$(date '+%Y%m%d-%H%M%S').png
 	strip_workspace_numbers yes
 	colors {
-		background #00000000
+		background #30024cAA
 		statusline #FFFFFF
 		separator #00000000
 		focused_workspace #FFFFFF #571F4E #FFFFFF 
@@ -197,26 +197,12 @@ bar {
 	}
 }
 
-# Keyboard layout
-
-exec setxkbmap -layout it
-
-exec_always picom 
-
-# Wallpaper
-exec --no-startup-id nitrogen --restore
-
-exec dropbox
-exec discord
-exec keepassxc
-exec mictray
-
 # Disable borders
 for_window [class=".*"] border pixel 0
 
 # Gaps
-gaps outer 5
-gaps inner 10
+# gaps outer 1
+gaps inner 5 
 
 # Only enable gaps on a workspace when there is at least one container
 smart_gaps on
@@ -224,10 +210,44 @@ smart_gaps on
 # Activate smart borders (only when there are effectively no gaps)
 smart_borders no_gaps
 
+# scratchpad move/show
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# Show the sup-mail scratchpad window, if any.
+
+bindsym $mod+Shift+s [title="^Sup ::"] scratchpad show
+
+
+# Open file explorer (ranger)
+bindsym $mod+Shift+f exec kitty -e ranger
+
+# Open text editor
+bindsym $mod+Ctrl+t  exec kitty -e emacsclient -t
+bindsym $mod+Shift+t exec emacsclient -c
+
+# Open browser
+bindsym $mod+Shift+b exec firefox-developer-edition  
+
 # Default workspace
-#for_window [class="Chromium"] move container to workspace $ws2
-#for_window [class="Firefox"] move contrainer to workspace $ws2
-for_window [class="Spotify"] move container to workspace $ws7
-for_window [class="Telegram"] move container to workspace $ws8
+for_window [class="Telegram"] move container to scratchpad
+for_window [class="whatsapp"] move container to scratchpad
 for_window [class="discord"] move container to workspace $ws9
-for_window [class="KeePassXC"] move container to workspace $ws10
+
+# Keyboard layout
+exec setxkbmap -layout it
+
+# wallpaper
+exec --no-startup-id nitrogen --restore
+
+# animations and transparency
+exec picom
+
+# startup application
+exec mictray	# audio manager
+exec dropbox
+exec keepassxc
+exec openrgb
+exec telegram
+exec whatsapp-nativifier

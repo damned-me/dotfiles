@@ -9,6 +9,9 @@ filetype indent on
 " syntax highlighting
 syntax on
 
+" mouse scrolling
+set mouse=a
+
 " line numbers
 set number
 
