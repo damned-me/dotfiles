@@ -1,3 +1,5 @@
+! colors generated with https://terminal.sexy/
+
 ! special
 *.foreground:   #c5c8c6
 *.background:   #1d1f21
@@ -38,6 +40,7 @@
 ! Fonts
 *faceName: DejaVu Sans Mono 
 *font: DejaVu Sans Mono
+
 ! for Powerline 
 *faceSize: 14 
 
@@ -48,8 +51,9 @@
                  Ctrl Shift <Key>V:    insert-selection(SELECT) \n\
                  Ctrl Shift <Key>C:    copy-selection(SELECT)
 
-! Scrollback...
-*savelines: 16384
+! Scrollback
+*savelines: 9999
+
 ! do not scroll with output
 *scrollTtyOutput: false
 

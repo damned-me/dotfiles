@@ -31,7 +31,7 @@ set expandtab
 " not save backups
 set nobackup
 
-" Do not let cursor scroll below or above N number of lines when scrolling.
+" do not let cursor scroll below or above N number of lines when scrolling.
 set scrolloff=10
 
 " not wrap lines
@@ -81,7 +81,6 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'dense-analysis/ale'
   Plug 'preservim/nerdtree'
-  " Plug 'preservim/vim-markdown'
   Plug 'iamcco/mathjax-support-for-mkdp'
   Plug 'iamcco/markdown-preview.vim'
 

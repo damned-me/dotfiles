@@ -9,7 +9,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="alanpeabody"
-#ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -152,74 +151,22 @@ function weather(){
 	curl wttr.in/$1
 }
 
-# Quick connect to wifi
-function wific(){
-    if [ -z "$1" ]
-    then
-        echo "Usage: wific <wifi_network> [interface]"
-        return 1
-    fi
-
-    interface=$2
-    if [ -z "$2" ]
-    then 
-        interface="wlan0" 
-    fi
-
-    while : ; do   
-        iwctl station $interface scan
-        [[ $? == 0 ]] || break
-    done
-
-    iwctl station $interface get-networks
-
-    while : ; do
-        iwctl station $interface connect $1 > /dev/null
-        [[ $? == 0 ]] || break
-    done;
-}
-
-# Open spotify
-function spoti(){
-    systemctl --user status spotifyd.service > /dev/null
-
-    if [[ $? == 3 ]]
-    then
-        systemctl --user restart spotifyd --now
-    fi
-
-    spt
-}
-
-#function fullbkp(){
-#    sudo tar czf "/mnt/backup-$HOST-$(date +"%d_%m_%Y").tar.gz" \
-#        --exclude=/backup.tar.gz \
-#        --exclude=/dev \
-#        --exclude=/mnt \
-#        --exclude=/proc \
-#        --exclude=/sys \
-#        --exclude=/tmp \
-#        --exclude=/media \
-#        --exclude=/lost+found \
-#        --exclude=/data \
-#        /
-#}
-
 # End of user defined functions
 
-#SSH SERVICE
+# SSH SERVICE
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
+# GPG SERVICE
+export GPG_TTY=$(tty)
+gpg-connect-agent updatestartuptty /bye >/dev/null
+
 #PATH
-export PATH="$PATH:/home/damned-me/.local/share/gem/ruby/3.0.0/bin"
+export PATH="$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin"
 export PATH="$PATH:/usr/share/rvm/bin"
 
 # Install Ruby Gems to ~/.gems
 export GEM_HOME="$HOME/.gems"
 export PATH="$PATH:$HOME/.gems/bin"
-
-export GPG_TTY=$(tty)
-gpg-connect-agent updatestartuptty /bye >/dev/null
 
 # Enable vi mode
 bindkey -v
