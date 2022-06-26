@@ -81,6 +81,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'dense-analysis/ale'
   Plug 'preservim/nerdtree'
+  Plug 'preservim/vim-markdown'
   Plug 'iamcco/mathjax-support-for-mkdp'
   Plug 'iamcco/markdown-preview.vim'
 

@@ -44,13 +44,14 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# Start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+# start a terminal
+#bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec alacritty
 
-# Kill focused window
+# kill focused window
 bindsym $mod+Shift+q kill
 
-# Start dmenu (a program launcher)
+# start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id dmenu_run
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
@@ -58,71 +59,73 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
-# Change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+ograve focus right
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
-# Alternatively, you can use the cursor keys:
+# alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# Move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+ograve move right
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
-# Alternatively, you can use the cursor keys:
+# alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# Split in horizontal orientation
-bindsym $mod+h split h
+# split in horizontal orientation
+#bindsym $mod+h split h
 
-# Split in vertical orientation
-bindsym $mod+v split v
+# split in vertical orientation
+#bindsym $mod+v split v
+
+# toggle orientation
 bindsym $mod+t split t
 
-# Enter fullscreen mode for the focused container
+# enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
-# Change container layout (stacked, tabbed, toggle split)
+# change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-# Toggle tiling / floating
+# toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
-# Change focus between tiling / floating windows
+# change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# Focus the parent container
+# focus the parent container
 bindsym $mod+a focus parent
 
-# Focus the child container
+# focus the child container
 #bindsym $mod+d focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
+set $ws1 "1:home"
+set $ws2 "2:web"
 set $ws3 "3"
 set $ws4 "4"
-set $ws5 "5"
+set $ws5 "5:emacs"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws9 "9:chats"
+set $ws10 "10:misc"
 
-# Switch to workspace
+# switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
 bindsym $mod+3 workspace number $ws3
@@ -134,7 +137,7 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
-# Move focused container to workspace
+# move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
 bindsym $mod+Shift+3 move container to workspace number $ws3
@@ -146,14 +149,14 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-# Reload the configuration file
+# reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-# Resize window (you can also use the mouse for that)
+# resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -182,26 +185,27 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
 bar {
-	status_command i3status
-	position top 
+    status_command i3status
+    position top
 	i3bar_command i3bar --transparency
 	bindsym --release button3 exec --no-startup-id import -window root ~/media/screenshots/$(date '+%Y%m%d-%H%M%S').png
 	strip_workspace_numbers yes
 	colors {
-		background #30024cAA
+        background #30024cAA
 		statusline #FFFFFF
 		separator #00000000
-		focused_workspace #FFFFFF #571F4E #FFFFFF 
+		focused_workspace #FFFFFF #571F4E #FFFFFF
 		inactive_workspace #5D5179 #00000000 #FFFFFF
 		urgent_workspace #FFFFFF #D50000 #FFFFFF
-	}
+    }
 }
 
 # Disable borders
 for_window [class=".*"] border pixel 0
 
 # Gaps
-gaps inner 5 
+# gaps outer 1
+gaps inner 5
 
 # Only enable gaps on a workspace when there is at least one container
 smart_gaps on
@@ -209,18 +213,16 @@ smart_gaps on
 # Activate smart borders (only when there are effectively no gaps)
 smart_borders no_gaps
 
-# Scratchpad move/show
+# scratchpad move/show
+
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
-# Show the sup-mail scratchpad window, if any.
-bindsym $mod+Shift+s [title="^Sup ::"] scratchpad show
-
 # Open file explorer (ranger)
-bindsym $mod+Shift+f exec kitty -e ranger
+bindsym $mod+Shift+f exec alacritty -e ranger
 
 # Open text editor
-bindsym $mod+Ctrl+t  exec kitty -e emacsclient -t
+bindsym $mod+Ctrl+t  exec alacritty -e emacsclient -t
 bindsym $mod+Shift+t exec emacsclient -c
 
 # Open browser
@@ -229,21 +231,46 @@ bindsym $mod+Shift+b exec firefox-developer-edition
 # Default workspace
 for_window [class="Telegram"] move container to scratchpad
 for_window [class="whatsapp"] move container to scratchpad
+for_window [class="Emacs"] move container to workspace $ws5
 for_window [class="discord"] move container to workspace $ws9
 
 # Keyboard layout
-exec setxkbmap -layout it
+exec_always --no-startup-id setxkbmap -layout it
 
-# Wallpaper
-exec --no-startup-id nitrogen --restore
+# wallpaper
+exec_always --no-startup-id feh --bg-fill ~/media/wallpapers/wallpaper.jpg
+# exec --no-startup-id nitrogen --restore
 
-# Animations and transparency
-exec picom
+# animations and transparency
+exec_always --no-startup-id picom
 
-# Startup application
-exec mictray	# audio manager
+# startup application
+
+exec mictray
 exec dropbox
 exec keepassxc
-exec openrgb
-exec telegram
-exec whatsapp-nativifier
+exec_always telegram-desktop
+exec_always whatsapp-nativefier
+exec --no-startup-id openrgb --startminimized
+
+# ws 2 
+exec --no-startup-id i3-msg 'workspace 2:web; exec firefox-developer-edition'
+
+# ws 5
+exec --no-startup-id i3-msg 'workspace 5:emacs; exec emacsclient -c'
+
+# ws 9
+exec --no-startup-id i3-msg 'workspace 9:chats; exec discord'
+
+# ws 10
+exec --no-startup-id "i3-msg 'workspace 10:misc; append_layout ~/.config/i3/ws10.json'"
+exec --no-startup-id alacritty --class spt -e zsh -c spt
+exec --no-startup-id alacritty --class ncpamixer -e zsh -c ncpamixer
+exec --no-startup-id alacritty --class cava -e zsh -c cava
+
+# ws 1
+exec --no-startup-id "i3-msg 'workspace 1:home; append_layout ~/.config/i3/ws01.json'"
+exec --no-startup-id alacritty --class terminal
+exec --no-startup-id alacritty --class htop -e zsh -c htop
+exec --no-startup-id alacritty --class unimatrix -e zsh -c unimatrix
+exec --no-startup-id alacritty --class pfetch -e zsh -c "echo && pfetch && zsh"

@@ -2,6 +2,8 @@
 
 My personal dotfiles collection
 
+I use X and Arch, btw, and haven't tested these configurations on other systems
+
 ## Installation
 
 Backup your configs
@@ -16,20 +18,28 @@ cp -r /tmp/dotfiles/.* ~
 ## List of Packages
 
 - X
-- kitty
-- alacritty
+    - xorg-xinit
 - xterm
+- kitty
+- alacritty (current)
 - zsh
+    - git
+    - gnupg
+    - pfetch
+    - htop
+    - unimatrix
+    - ncpamixer
+    - cava
+    - ranger
+    - spotify-tui
 - vim
 - i3-gaps
   - i3status
   - nitrogen
+  - feh (current)
   - picom
 - zathura
-- rangher
-- cava
 - dunst
-- spotify-tui
 - qutebrowser
 
 ### [zsh](https://www.zsh.org/)
@@ -52,8 +62,7 @@ Inside `.zshrc`
 
 ```sh
 # User defined alias
-
-default ls alias (uncomment if exa is not used)
+#default ls alias (uncomment if exa is not used)
 #alias ls='ls --color=auto'
 #alias ll='ls -la'
 
@@ -80,7 +89,7 @@ alias tconfig='vi ~/.Xresources'
 alias i3config='vi ~/.config/i3/config'
 alias i3sconfig='vi ~/.config/i3status/config'
 alias rconfig='vi ~/.config/ranger/rc.conf'
-
+alias qlo='i3-msg exit'
 # End of user defined alias
 ```
 
@@ -106,6 +115,13 @@ weather <location>
 ```
 
 ### [vim](https://github.com/vim/vim)
+
+Install vimplug:
+
+```sh
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
 
 Config `.vimrc`
 

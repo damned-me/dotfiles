@@ -133,7 +133,7 @@ alias tconfig='vi ~/.Xresources'
 alias i3config='vi ~/.config/i3/config'
 alias i3sconfig='vi ~/.config/i3status/config'
 alias rconfig='vi ~/.config/ranger/rc.conf'
-
+alias qlo='i3-msg exit' 
 # End of user defined alias
 
 # User defined functions
@@ -152,61 +152,6 @@ function cheat(){
 function weather(){
 	curl wttr.in/$1
 }
-
-# Quick connect to wifi
-function wific(){
-    if [ -z "$1" ]
-    then
-        echo "Usage: wific <wifi_network> [interface]"
-        return 1
-    fi
-
-    interface=$2
-    if [ -z "$2" ]
-    then 
-        interface="wlan0" 
-    fi
-
-    while : ; do   
-        iwctl station $interface scan
-        [[ $? == 0 ]] || break
-    done
-
-    iwctl station $interface get-networks
-
-    while : ; do
-        iwctl station $interface connect $1 > /dev/null
-        [[ $? == 0 ]] || break
-    done;
-}
-
-# Open spotify
-function spoti(){
-    systemctl --user status spotifyd.service > /dev/null
-
-    if [[ $? == 3 ]]
-    then
-        systemctl --user restart spotifyd --now
-    fi
-
-    spt
-}
-
-#function fullbkp(){
-#    sudo tar czf "/mnt/backup-$HOST-$(date +"%d_%m_%Y").tar.gz" \
-#        --exclude=/backup.tar.gz \
-#        --exclude=/dev \
-#        --exclude=/mnt \
-#        --exclude=/proc \
-#        --exclude=/sys \
-#        --exclude=/tmp \
-#        --exclude=/media \
-#        --exclude=/lost+found \
-#        --exclude=/data \
-#        /
-#}
-
-# End of user defined functions
 
 #SSH SERVICE
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
