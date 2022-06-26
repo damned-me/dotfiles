@@ -17,6 +17,7 @@ cp -r /tmp/dotfiles/.* ~
 
 - X
 - kitty
+- alacritty
 - xterm
 - zsh
 - vim
@@ -29,6 +30,7 @@ cp -r /tmp/dotfiles/.* ~
 - cava
 - dunst
 - spotify-tui
+- qutebrowser
 
 ### [zsh](https://www.zsh.org/)
 
@@ -84,7 +86,7 @@ alias rconfig='vi ~/.config/ranger/rc.conf'
 
 #### Functions
 
-Some (broken) utility function I had written for myself
+Some utility function I had written for myself, they require `curl` as they query the [cht.sh](https://cht.sh/) and [wttr.in](https://wttr.in/) api.
 
 ```sh
 # User defined functions
