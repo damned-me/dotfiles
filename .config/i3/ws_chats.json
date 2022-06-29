@@ -1,0 +1,72 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "pixel",
+    "floating": "auto_off",
+    "layout": "tabbed",
+    "marks": [],
+    "percent": null,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 0,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 741,
+               "width": 940,
+               "x": 2,
+               "y": 2
+            },
+            "marks": [],
+            "name": "Discord",
+            "percent": 0.333333333333333,
+            "swallows": [
+               {
+                "class": "^discord$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 0,
+            "floating": "user_off",
+            "geometry": {
+               "height": 576,
+               "width": 683,
+               "x": 342,
+               "y": 84
+            },
+            "marks": [],
+            "name": "Telegram",
+            "percent": 0.333333333333333,
+            "swallows": [
+               {
+                "class": "^TelegramDesktop$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 0,
+            "floating": "user_off",
+            "geometry": {
+               "height": 576,
+               "width": 683,
+               "x": 341,
+               "y": 96
+            },
+            "marks": [],
+            "name": "WhatsApp",
+            "percent": 0.333333333333333,
+            "swallows": [
+               {
+                "title": "^WhatsApp$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+

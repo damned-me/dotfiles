@@ -1,0 +1,52 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "pixel",
+    "floating": "auto_off",
+    "layout": "tabbed",
+    "marks": [],
+    "percent": null,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 0,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 745,
+               "width": 1366,
+               "x": 0,
+               "y": 0
+            },
+            "marks": [],
+            "name": "Firefox Developer Edition",
+            "percent": 0.5,
+            "swallows": [
+               {
+                "window_role": "^browser$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 0,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 723,
+               "width": 1366,
+               "x": 0,
+               "y": 0
+            },
+            "marks": [],
+            "name": "Mozilla Thunderbird",
+            "percent": 0.5,
+            "swallows": [
+               {
+                "instance": "^Mail$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+

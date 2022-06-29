@@ -115,6 +115,7 @@ alias ll='exa --tree --level=2 -l'
 alias la='exa --tree --level=2 -la'
 
 alias pls="sudo"
+alias qlo='i3-msg exit' 
 
 alias vi='vim'
 alias vim='nvim'
@@ -133,7 +134,6 @@ alias tconfig='vi ~/.Xresources'
 alias i3config='vi ~/.config/i3/config'
 alias i3sconfig='vi ~/.config/i3status/config'
 alias rconfig='vi ~/.config/ranger/rc.conf'
-alias qlo='i3-msg exit' 
 # End of user defined alias
 
 # User defined functions
