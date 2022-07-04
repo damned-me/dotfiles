@@ -45,7 +45,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-#bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Shift+Return exec i3-sensible-terminal
 bindsym $mod+Return exec alacritty
 
 # kill focused window
@@ -217,7 +217,7 @@ mode "mouse" {
 
 	bindsym Shift+Left exec xdotool mousemove_relative -- -$quick 0
 	bindsym Shift+Down exec xdotool mousemove_relative 0 $quick
-	bindsym Shift+Up exec xdotool mousemove_relative -- 0 -$quick
+	bindsym Shift+Up   exec xdotool mousemove_relative -- 0 -$quick
 	bindsym Shift+Right exec xdotool mousemove_relative $quick 0
 
 	# Mouse movement (fast) -- vim keybindings
@@ -231,7 +231,7 @@ mode "mouse" {
 
 	bindsym Shift+$mod+Left exec xdotool mousemove_relative -- -$fast 0
 	bindsym Shift+$mod+Down exec xdotool mousemove_relative 0 $fast
-	bindsym Shift+$mod+Up exec xdotool mousemove_relative -- 0 -$fast
+	bindsym Shift+$mod+Up   exec xdotool mousemove_relative -- 0 -$fast
 	bindsym Shift+$mod+Right exec xdotool mousemove_relative $fast 0
 
 	# Left Click
@@ -278,7 +278,7 @@ bar {
     #mode hide 
     #position top
 	colors {
-        background #30024cAA
+        background #30024c00
 		statusline #FFFFFF
 		separator #00000000
 		focused_workspace #FFFFFF #571F4E #FFFFFF
@@ -327,11 +327,15 @@ exec_always --no-startup-id setxkbmap -layout it
 exec_always --no-startup-id feh --bg-fill ~/media/wallpapers/wallpaper.jpg
 # exec --no-startup-id nitrogen --restore
 
+# Widgets
+exec --no-startup-id conky
+
 # animations and transparency
 exec_always --no-startup-id picom
 
 # startup application
 
+exec udiskie -t
 exec mictray
 exec dropbox
 exec keepassxc
