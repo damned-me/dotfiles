@@ -6,6 +6,12 @@ filetype on
 filetype plugin on
 filetype indent on
 
+
+" store backup, undo, and swap files in temp directory
+set directory=/tmp/
+set backupdir=/tmp/
+set undodir=/tmp/
+
 " syntax highlighting
 syntax on
 

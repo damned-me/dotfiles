@@ -93,7 +93,7 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -113,6 +113,8 @@ export EDITOR='vim'
 alias ls='exa'
 alias ll='exa --tree --level=2 -l'
 alias la='exa --tree --level=2 -la'
+
+alias yay=paru
 
 alias pls="sudo"
 alias qlo='i3-msg exit' 
@@ -157,7 +159,7 @@ function weather(){
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 #PATH
-export PATH="$PATH:/home/damned-me/.local/share/gem/ruby/3.0.0/bin"
+export PATH="$PATH:~/.local/share/gem/ruby/3.0.0/bin"
 export PATH="$PATH:/usr/share/rvm/bin"
 
 # Install Ruby Gems to ~/.gems
@@ -169,3 +171,4 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 
 # Enable vi mode
 bindkey -v
+export PATH=$PATH:/home/damned-me/.spicetify

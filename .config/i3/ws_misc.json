@@ -15,11 +15,11 @@
        "y": 0
     },
     "marks": [],
-    "name": "spt",
+    "name": "Spotify",
     "percent": 0.7,
     "swallows": [
        {
-        "instance": "^spt$"
+        "instance": "^spotify$"
        }
     ],
     "type": "con"
