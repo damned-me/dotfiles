@@ -22,7 +22,9 @@ general {
 #order += "memory"
 order += "tztime local"
 order += "cpu_temperature 0"
+#order += "tztime holder__tmp" #custom
 order += "volume master"
+
 wireless _first_ {
         format_up = "🌐%quality %essid" # %ip"
         format_down = "🌐-"
@@ -60,7 +62,7 @@ tztime local {
 
 cpu_temperature 0 {
         format = "🌡️ %degrees °C"
-        path = "/sys/class/hwmon/hwmon4/temp2_input"
+        path = "/sys/class/hwmon/hwmon3/temp2_input"
 }
 
 volume master {
@@ -71,3 +73,8 @@ volume master {
         mixer_idx = 0
 }
 
+# --- CUSTOM HOLDERS ---
+# used with custom wrapper script to substitute output of commands
+tztime holder__tmp {
+    format = "holder__tmp °C"
+}

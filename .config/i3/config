@@ -9,46 +9,43 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-set $mod Mod4
-
+################### CORE CONFIG ######################
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-#font pango:monospace 8
-
+# font pango:monospace 8
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango:DejaVu Sans Mono 12
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
-exec --no-startup-id dex --autostart --environment i3
+# exec --no-startup-id dex --autostart --environment i3
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
+# exec --no-startup-id nm-applet
 
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-#bindsym XF86MonBrightnessUp exec brightnessctl set +20% # increase screen brightness
-#bindsym XF86MonBrightnessDown exec brightnessctl set 20%- # decrease screen brightness
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
-bindsym XF86AudioPlay exec playerctl play-pause
-bindsym XF86ScreenSaver exec i3lock
+
+set $mod Mod4
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+################### CORE BINDINGS ######################
 
 # start a terminal
 bindsym $mod+Shift+Return exec i3-sensible-terminal
@@ -58,9 +55,13 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
+#  bindsym $mod+d exec --no-startup-id dmenu_run
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
+# bindsym $mod+shift+d exec "rofi -show window"
+ bindcode $mod+40 exec "rofi -show window"
+ bindsym $mod+shift+d exec "rofi -modi drun,run -show drun"
+#bindsym $mod+shift+d  exec eval "rofi -dmenu -i -p 'window' | cut -d ' ' -f1 | xargs -I {} i3-msg '[id=\\"{}\\"] focus'"
 # There also is i3-dmenu-desktop which only displays applications shipping a
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
@@ -118,9 +119,34 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-# Monitors
-set $monitor_left   DP-0
-set $monitor_right  HDMI-0
+# scratchpad move/show
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+#bindsym XF86MonBrightnessUp exec brightnessctl set +20% # increase screen brightness
+#bindsym XF86MonBrightnessDown exec brightnessctl set 20%- # decrease screen brightness
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86ScreenSaver exec i3lock
+
+# Open file explorer (ranger)
+bindsym $mod+Shift+f exec alacritty -e ranger
+
+# Open text editor
+bindsym $mod+Ctrl+t  exec alacritty -e emacsclient -t
+bindsym $mod+Shift+t exec emacsclient -c
+
+# Open browser
+bindsym $mod+Shift+b exec firefox-developer-edition
+
+################### WORKSPACES ######################
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -136,20 +162,7 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10:misc"
 
-# Setup workspaces
-workspace $ws0 output $monitor_right
-workspace $ws1 output $monitor_left
-workspace $ws2 output $monitor_right
-workspace $ws3 output $monitor_left
-workspace $ws4 output $monitor_right
-workspace $ws5 output $monitor_left
-workspace $ws6 output $monitor_left
-workspace $ws7 output $monitor_right
-workspace $ws8 output $monitor_right
-workspace $ws9 output $monitor_right
-workspace $ws10 output $monitor_right
-
-# switch to workspace
+# Switch to workspace
 bindsym $mod+p workspace number $ws0
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -162,7 +175,7 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
-# move focused container to workspace
+# Move focused container to workspace
 
 # The stash is intended to be a windowsless workspace, for this reason no shorcut should be 
 # bind to it. Btw, if you want you can just uncomment the line below
@@ -178,14 +191,28 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+# Monitors
+set $monitor_left   DP-0
+set $monitor_right  HDMI-0
+
+# Setup workspaces
+workspace $ws0 output $monitor_right
+workspace $ws1 output $monitor_left
+workspace $ws2 output $monitor_right
+workspace $ws3 output $monitor_left
+workspace $ws4 output $monitor_right
+workspace $ws5 output $monitor_left
+workspace $ws6 output $monitor_left
+workspace $ws7 output $monitor_right
+workspace $ws8 output $monitor_right
+workspace $ws9 output $monitor_right
+workspace $ws10 output $monitor_right
+
+################### MODES ######################
 
 # resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
+
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -210,54 +237,46 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-bindsym $mod+r mode "resize"
-
+# Use mouse with keyboard
 # source : https://www.reddit.com/r/i3wm/comments/3btki2/use_the_mouse_cursor_from_the_keyboard/
+bindsym $mod+Shift+m mode "mouse"
 mode "mouse" {
-
 	# set your three speeds here
-
 	set $slow 1
 	set $quick 10
 	set $fast 50
 
 	# Mouse movement (slow/fine-tuned) -- vim keybindings
-
 	bindsym h exec xdotool mousemove_relative -- -$slow 0
 	bindsym j exec xdotool mousemove_relative 0 $slow
 	bindsym k exec xdotool mousemove_relative -- 0 -$slow
 	bindsym l exec xdotool mousemove_relative $slow 0
 
 	# Mouse movement (slow/fine-tuned) -- arrow keys
-
 	bindsym Left exec xdotool mousemove_relative -- -$slow 0
 	bindsym Down exec xdotool mousemove_relative 0 $slow
 	bindsym Up exec xdotool mousemove_relative -- 0 -$slow
 	bindsym Right exec xdotool mousemove_relative $slow 0
 
 	# Mouse movement (quicker) -- vim keybindings
-
 	bindsym Shift+h exec xdotool mousemove_relative -- -$quick 0
 	bindsym Shift+j exec xdotool mousemove_relative 0 $quick
 	bindsym Shift+k exec xdotool mousemove_relative -- 0 -$quick
 	bindsym Shift+l exec xdotool mousemove_relative $quick 0
 
 	# Mouse movement (quicker) -- arrow keys
-
 	bindsym Shift+Left exec xdotool mousemove_relative -- -$quick 0
 	bindsym Shift+Down exec xdotool mousemove_relative 0 $quick
 	bindsym Shift+Up   exec xdotool mousemove_relative -- 0 -$quick
 	bindsym Shift+Right exec xdotool mousemove_relative $quick 0
 
 	# Mouse movement (fast) -- vim keybindings
-
 	bindsym Shift+$mod+h exec xdotool mousemove_relative -- -$fast 0
 	bindsym Shift+$mod+j exec xdotool mousemove_relative 0 $fast
 	bindsym Shift+$mod+k exec xdotool mousemove_relative -- 0 -$fast
 	bindsym Shift+$mod+l exec xdotool mousemove_relative $fast 0
 
 	# Mouse movement (fast) -- arrow keys
-
 	bindsym Shift+$mod+Left exec xdotool mousemove_relative -- -$fast 0
 	bindsym Shift+$mod+Down exec xdotool mousemove_relative 0 $fast
 	bindsym Shift+$mod+Up   exec xdotool mousemove_relative -- 0 -$fast
@@ -292,27 +311,120 @@ mode "mouse" {
 
 
 	# return to normal keybindings -- IMPORTANT!!
-
 	bindsym Escape mode "default"
 }
 
-bindsym $mod+Shift+m mode "mouse"
+# System mode
+# source: https://github.com/erikdubois/Ubuntu1610i3/blob/58c3b108baa1a4e92057ee58e2f04a878678bc97/installation/Step_4/i3/config-i3blocks
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+bindsym $mod+Pause mode "$mode_system"
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3lock, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id ~/.config/i3/i3exit.sh suspend, mode "default"
+    bindsym h exec --no-startup-id ~/.config/i3/i3exit.sh hibernate, mode "default"
+    bindsym r exec --no-startup-id ~/.config/i3/i3exit.sh reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id ~/.config/i3/i3exit.sh shutdown, mode "default"
 
-# Screenshots
-bindsym Print exec --no-startup-id maim "/home/$USER/media/screenshots/$(date)"
-bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/media/screenshots/$(date)"
-bindsym $mod+Shift+Print exec --no-startup-id maim --select "/home/$USER/media/screenshots/$(date)"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
 
-## Clipboard Screenshots
-bindsym $mod+Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
-bindsym $mod+Ctrl+Shift+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
-bindsym $mod+Ctrl+Shift+Alt+Print exec --no-startup-id maim --select | xclip -selection clipboard -t image/png
+# Interactive gaps chainging mode
+# source: https://github.com/erikdubois/Ubuntu1610i3/blob/58c3b108baa1a4e92057ee58e2f04a878678bc97/installation/Step_4/i3/config-i3blocks
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+################### SCREEN_CAPTURES ######################
+set $mode_screencapt Screen capture: (s) screenshot, (v) screencast 
+set $mode_screenshot Screenshot: (Ret) Save screen (C+S+Ret) Save region (C+Ret) Clip screen (S+Ret) Clip region
+set $mode_screencast Screencast: (r) Start rec
+set $mode_screenrec  REC (S+Ret) stop
+
+bindsym $mod+Print mode "$mode_screencapt"
+
+mode "$mode_screencapt" {
+bindsym s mode "$mode_screenshot"
+bindsym v mode "$mode_screencast"
+
+bindsym Escape mode "default"
+bindsym Return mode "default"
+}
+
+mode "$mode_screenshot" {
+# Full screen to file
+bindsym Return exec --no-startup-id ffcast -q -\# "$(xdotool getactivewindow)" png /home/$USER/media/screenshots/"$(date +%F\ %T)".png, mode "default"
+
+# Region to file
+bindsym Ctrl+Shift+Return exec --no-startup-id ffcast -s trim png /home/$USER/media/screenshots/"$(date +%F\ %T)".png
+
+# Screen to clipboard
+bindsym Ctrl+Return exec --no-startup-id maim | xclip -selection clipboard -t image/png
+
+# Select region to clipboard
+bindsym Shift+Return exec --no-startup-id maim -s | xclip -selection clipboard -t image/png, mode "default"
+
+bindsym Escape mode "default"
+}
+
+mode "$mode_screencast" {
+bindsym r exec --no-startup-id ffcast -q $(slop -q -n -f '-g %g ') rec /home/$USER/media/videos/"$(date +%F\ %T)".mp4, mode "$mode_recording"
+
+bindsym Escape mode "default"
+}
+
+mode "$mode_recording" {
+bindsym Shift+Return exec --no-startup-id pkill -fxn '(/\S+)*ffmpeg\s.*\sx11grab\s.*', mode "default"
+
+bindsym Escape mode "default"
+}
+
+################### BAR ######################
+
+# bar toggle, hide or show 
+bindsym $mod+b bar mode toggle
 
 # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
 bar {
-    status_command i3status
-	i3bar_command i3bar --transparency
-	bindsym --release button3 exec --no-startup-id import -window root ~/media/screenshots/$(date '+%Y%m%d-%H%M%S').png
+    status_command exec i3status
+    #status_command exec ~/bin/i3status-custom.sh
+    #status_command exec i3blocks
+	i3bar_command exec i3bar --transparency
+    # bindsym --release button3 exec --no-startup-id import -window root ~/media/screenshots/$(date '+%Y%m%d-%H%M%S').png
 	strip_workspace_numbers yes
     #mode hide 
     #position top
@@ -326,13 +438,16 @@ bar {
     }
 }
 
+################### BORDERS ######################
+
 # Disable borders
 default_border pixel 0
 default_floating_border pixel 0
 
 for_window [class="^.*"] border pixel 0
 
-#colors 
+################### COLORS ######################
+
 client.focused          #8305a7 #6e0fdb #ffffff #b405f2 #b96ce3
 client.focused_inactive #4e0b9c #5e00dd #ffffff #7510e8 #620ec2
 client.unfocused        #4e0b9c #2e065c #ffffff #7510e8 #620ec2
@@ -340,7 +455,8 @@ client.urgent           #2f343a #900000 #ffffff #900000 #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000 #0c0c0c
 client.background       #ffffff
 
-# Gaps
+################### GAPS ######################
+
 #gaps outer 5
 gaps inner 3
 
@@ -350,20 +466,7 @@ smart_gaps on
 # Activate smart borders (only when there are effectively no gaps)
 smart_borders no_gaps
 
-# scratchpad move/show
-
-bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+minus scratchpad show
-
-# Open file explorer (ranger)
-bindsym $mod+Shift+f exec alacritty -e ranger
-
-# Open text editor
-bindsym $mod+Ctrl+t  exec alacritty -e emacsclient -t
-bindsym $mod+Shift+t exec emacsclient -c
-
-# Open browser
-bindsym $mod+Shift+b exec firefox-developer-edition
+################### LAYOUTS ######################
 
 # Default workspace
 for_window [class="Emacs"] move container to workspace $ws3
@@ -372,6 +475,7 @@ for_window [class="discord"] move container to workspace $ws4
 # Keyboard layout
 exec_always --no-startup-id setxkbmap -layout it
 exec_always --no-startup-id xrandr --output HDMI-0 --right-of DP-0
+
 # wallpaper
 exec_always --no-startup-id feh --bg-fill ~/media/wallpapers/wallpaper.jpg
 # exec --no-startup-id nitrogen --restore
@@ -382,13 +486,15 @@ exec --no-startup-id conky
 # animations and transparency
 exec_always --no-startup-id picom
 
-# startup application
-
+################### STARTUP APPLICATIONS ######################
+# Tray
 exec udiskie -t
 exec mictray
 exec dropbox
-exec keepassxc
+exec --no-startup-id keepassxc
 exec --no-startup-id openrgb --startminimized
+
+# User
 
 # ws 2 
 exec --no-startup-id i3-msg 'workspace 2:web; append_layout ~/.config/i3/ws_web.json'
@@ -408,11 +514,11 @@ exec --no-startup-id i3-msg 'workspace 4:chats; exec whatsapp-nativefier'
 exec --no-startup-id i3-msg 'workspace 10:misc; append_layout ~/.config/i3/ws_misc.json'
 exec --no-startup-id i3-msg 'workspace 10:misc; exec spotify'
 exec --no-startup-id i3-msg 'workspace 10:misc; exec alacritty --class ncpamixer -o font.size=9 -e zsh -c ncpamixer'
-exec --no-startup-id alacritty --class cava -o font.size=3 -e zsh -c cava
+exec --no-startup-id i3-msg 'workspace 10:misc; exec alacritty --class cava -o font.size=3 -e zsh -c cava'
 
 # ws 1
 exec --no-startup-id i3-msg 'workspace 1:home; append_layout ~/.config/i3/ws_home.json'
-exec --no-startup-id alacritty --class terminal
-exec --no-startup-id alacritty --class htop -e zsh -c htop
-exec --no-startup-id alacritty --class unimatrix -e zsh -c unimatrix
-exec --no-startup-id alacritty --class pfetch -e zsh -c "echo && pfetch && zsh"
+exec --no-startup-id i3-msg 'workspace 1:home; exec alacritty --class terminal'
+exec --no-startup-id i3-msg 'workspace 1:home; exec alacritty --class htop -e zsh -c htop'
+exec --no-startup-id i3-msg 'workspace 1:home; exec alacritty --class unimatrix -e zsh -c unimatrix'
+exec --no-startup-id i3-msg 'workspace 1:home; exec alacritty --class pfetch -e zsh -c "echo && pfetch && zsh"'

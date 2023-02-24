@@ -84,13 +84,11 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 " ##### PLUGINS #####
 
 call plug#begin('~/.vim/plugged')
-
   Plug 'dense-analysis/ale'
   Plug 'preservim/nerdtree'
-  Plug 'preservim/vim-markdown'
+"  Plug 'preservim/vim-markdown'
   Plug 'iamcco/mathjax-support-for-mkdp'
   Plug 'iamcco/markdown-preview.vim'
-
 call plug#end()
 
 " ###################
@@ -111,9 +109,6 @@ augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
 augroup END
-
-" Vimscripts code
-
 " #####################
 
 

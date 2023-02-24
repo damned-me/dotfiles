@@ -125,7 +125,7 @@ alias vim='nvim'
 alias v='vi'
 alias q='exit'
 
-alias p='python3'
+alias p='ipython3'
 
 alias pdf=zathura
 
@@ -171,4 +171,4 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 
 # Enable vi mode
 bindkey -v
-export PATH=$PATH:/home/damned-me/.spicetify
+export PATH=$PATH:~/.spicetify:~/.local/bin

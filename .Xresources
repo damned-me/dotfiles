@@ -43,7 +43,9 @@
 
 ! for Powerline 
 *faceSize: 14 
-
+*.translations: #override \n\
+  Ctrl <Key> minus: smaller-vt-font() \n\
+  Ctrl <Key> plus: larger-vt-font()
 ! Clipboard
 *translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
 
